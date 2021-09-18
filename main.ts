@@ -6,6 +6,9 @@ function update_system_clock () {
         system_clock_count = 0
     }
 }
+input.onButtonPressed(Button.A, function () {
+    basic.showNumber(input.temperature())
+})
 function update_monitoring_status () {
     if (system_clock_count == 0) {
         led.plotBrightness(0, 4, 1)
@@ -27,7 +30,7 @@ function update_alarm_indicator () {
             . . . . .
             `)
     } else {
-        basic.clearScreen()
+    	
     }
 }
 function check_sensors () {
