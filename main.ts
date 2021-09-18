@@ -49,10 +49,10 @@ function check_sensors () {
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (is_alarm_silenced == true) {
         is_alarm_silenced = false
-        led.plotBrightness(4, 4, 1)
+        led.plotBrightness(4, 4, 255)
     } else {
         is_alarm_silenced = true
-        led.plotBrightness(4, 4, 255)
+        led.plotBrightness(4, 4, 1)
     }
 })
 let system_clock_count = 0
