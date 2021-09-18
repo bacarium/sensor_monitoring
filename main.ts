@@ -1,7 +1,7 @@
 function update_system_clock () {
-    basic.pause(10)
+    basic.pause(100)
     if (system_clock_count < 1000) {
-        system_clock_count += 10
+        system_clock_count += 100
     } else {
         system_clock_count = 0
     }
