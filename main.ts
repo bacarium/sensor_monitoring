@@ -30,13 +30,7 @@ function update_alarm_indicator () {
             . . . . .
             `)
     } else {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
+        led.unplot(0, 3)
     }
 }
 function check_sensors () {
