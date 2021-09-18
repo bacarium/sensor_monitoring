@@ -1,23 +1,36 @@
-function activate_temp_alarm () {
-    led.plot(0, 0)
-    led.plot(0, 1)
-    led.plot(1, 0)
-    led.plot(1, 1)
-    if (is_alarm_silenced == true) {
-        music.playTone(262, music.beat(BeatFraction.Half))
-    }
-}
-function check_temp_sensor () {
-    if (input.temperature() > 24) {
-        temp_alarm_active = 0
-        activate_temp_alarm()
+function update_system_clock () {
+    basic.pause(1)
+    if (system_clock_count < 1000) {
+        system_clock_count += 1
+    } else {
+        system_clock_count = 0
     }
 }
 function update_monitoring_status () {
-    led.plotBrightness(0, 4, 1)
-    basic.pause(500)
-    led.unplot(0, 4)
-    basic.pause(500)
+	
+}
+function update_alarm_indicator () {
+    if (is_alarm_active == true) {
+        basic.showLeds(`
+            . . . . .
+            . # # # .
+            . # # # .
+            . # # # .
+            . . . . .
+            `)
+        if (is_alarm_active == true && (is_alarm_silenced == false && system_clock_count == 500)) {
+            music.playTone(262, music.beat(BeatFraction.Half))
+        }
+    } else {
+        basic.clearScreen()
+    }
+}
+function check_sensors () {
+    if (input.temperature() > 24) {
+        is_alarm_active = true
+    } else {
+        is_alarm_active = false
+    }
 }
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (is_alarm_silenced == true) {
@@ -26,10 +39,15 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
         is_alarm_silenced = true
     }
 })
-let temp_alarm_active = 0
+let system_clock_count = 0
 let is_alarm_silenced = false
-is_alarm_silenced = true
+let is_alarm_active = false
+is_alarm_active = true
+is_alarm_silenced = false
+system_clock_count = 0
 basic.forever(function () {
+    check_sensors()
+    update_alarm_indicator()
     update_monitoring_status()
-    check_temp_sensor()
+    update_system_clock()
 })
