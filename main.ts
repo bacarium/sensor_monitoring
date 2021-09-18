@@ -19,7 +19,7 @@ function update_monitoring_status () {
 }
 function update_alarm_indicator () {
     if (is_alarm_active == true && is_alarm_silenced == false) {
-        music.startMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.OnceInBackground)
+        music.startMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.ForeverInBackground)
     } else {
         music.stopMelody(MelodyStopOptions.All)
     }
