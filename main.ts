@@ -10,6 +10,9 @@ function update_monitoring_status () {
 	
 }
 function update_alarm_indicator () {
+    if (is_alarm_active == true && is_alarm_silenced == false) {
+        music.playTone(262, music.beat(BeatFraction.Half))
+    }
     if (is_alarm_active == true) {
         basic.showLeds(`
             . . . . .
@@ -18,9 +21,6 @@ function update_alarm_indicator () {
             . # # # .
             . . . . .
             `)
-        if (is_alarm_active == true && (is_alarm_silenced == false && system_clock_count == 500)) {
-            music.playTone(262, music.beat(BeatFraction.Half))
-        }
     } else {
         basic.clearScreen()
     }
