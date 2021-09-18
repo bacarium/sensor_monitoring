@@ -46,6 +46,9 @@ function check_sensors () {
         is_alarm_active = false
     }
 }
+input.onButtonPressed(Button.AB, function () {
+    basic.showNumber(system_clock_count)
+})
 input.onButtonPressed(Button.B, function () {
     basic.showNumber(input.lightLevel())
 })
