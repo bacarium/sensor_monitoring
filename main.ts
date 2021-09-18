@@ -19,18 +19,18 @@ function update_monitoring_status () {
 }
 function update_alarm_indicator () {
     if (is_alarm_active == true && is_alarm_silenced == false) {
-        music.playTone(262, music.beat(BeatFraction.Half))
+        music.startMelody(music.builtInMelody(Melodies.Wawawawaa), MelodyOptions.OnceInBackground)
+    } else {
+        music.stopMelody(MelodyStopOptions.All)
     }
     if (is_alarm_active == true) {
-        basic.showLeds(`
-            . . . . .
-            . # # # .
-            . # # # .
-            . # # # .
-            . . . . .
-            `)
+        for (let value of [[1, 1]]) {
+            led.plot(value[0], value[1])
+        }
     } else {
-        led.unplot(0, 3)
+        for (let value of [[1, 1]]) {
+            led.unplot(value[0], value[1])
+        }
     }
 }
 function check_sensors () {
