@@ -1,13 +1,18 @@
 function update_system_clock () {
-    basic.pause(1)
+    basic.pause(10)
     if (system_clock_count < 1000) {
-        system_clock_count += 1
+        system_clock_count += 10
     } else {
         system_clock_count = 0
     }
 }
 function update_monitoring_status () {
-	
+    if (system_clock_count == 0) {
+        led.plotBrightness(0, 4, 1)
+    }
+    if (system_clock_count == 500) {
+        led.unplot(0, 4)
+    }
 }
 function update_alarm_indicator () {
     if (is_alarm_active == true && is_alarm_silenced == false) {
