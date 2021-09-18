@@ -46,6 +46,9 @@ function check_sensors () {
         is_alarm_active = false
     }
 }
+input.onButtonPressed(Button.B, function () {
+    basic.showNumber(input.lightLevel())
+})
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (is_alarm_silenced == true) {
         is_alarm_silenced = false
