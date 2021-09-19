@@ -1,20 +1,24 @@
+let system_loop_count = 0
+let is_alarm_active = ""
+let is_alarm_silenced = false
+let system_data_packet = ""
 function update_system_clock () {
     basic.pause(100)
-    if (system_clock_count < 1000) {
-        system_clock_count += 100
+    if (system_loop_count < 1000) {
+        system_loop_count += 100
     } else {
-        system_clock_count = 0
+        system_loop_count = 0
     }
 }
 input.onButtonPressed(Button.A, function () {
     basic.showNumber(input.temperature())
 })
 function update_monitoring_status () {
-    if (system_clock_count == 0) {
+    if (system_loop_count == 0) {
         basic.clearScreen()
         led.plotBrightness(0, 4, 1)
     }
-    if (system_clock_count == 500) {
+    if (system_loop_count == 500) {
         led.unplot(0, 4)
     }
 }
@@ -34,12 +38,20 @@ function update_alarm_indicator () {
         }
     }
 }
-function check_sensors () {
+function check_sensors (system_data_packet: string) {
+    is_alarm_active = system_data_packet.charAt(1)
+    is_alarm_silenced = system_data_packet.charAt(2)
+    system_loop_count = system_data_packet.charAt(3)
     if (input.temperature() > 24) {
-        is_alarm_active = true
+        is_alarm_active = "1"
     } else {
-        is_alarm_active = false
+        is_alarm_active = "0"
+        system_data_packet = "" + is_alarm_active + is_alarm_silenced + system_loop_count
     }
+}
+function init_system_data () {
+    system_data_packet = "000"
+    return system_data_packet
 }
 input.onButtonPressed(Button.B, function () {
     basic.showNumber(input.lightLevel())
@@ -53,14 +65,11 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
         led.plotBrightness(4, 4, 1)
     }
 })
-let system_clock_count = 0
-let is_alarm_silenced = false
-let is_alarm_active = false
-is_alarm_active = true
-is_alarm_silenced = false
-system_clock_count = 0
 basic.forever(function () {
-    check_sensors()
+    if (system_data_packet.isEmpty()) {
+        system_data_packet = init_system_data()
+    }
+    check_sensors(system_data_packet)
     update_alarm_indicator()
     update_monitoring_status()
     update_system_clock()
