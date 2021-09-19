@@ -11,6 +11,7 @@ input.onButtonPressed(Button.A, function () {
 })
 function update_monitoring_status () {
     if (system_clock_count == 0) {
+        basic.clearScreen()
         led.plotBrightness(0, 4, 1)
     }
     if (system_clock_count == 500) {
@@ -40,9 +41,6 @@ function check_sensors () {
         is_alarm_active = false
     }
 }
-input.onButtonPressed(Button.AB, function () {
-    basic.showNumber(system_clock_count)
-})
 input.onButtonPressed(Button.B, function () {
     basic.showNumber(input.lightLevel())
 })
