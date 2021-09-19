@@ -1,6 +1,6 @@
 let system_loop_counter = 0
 basic.forever(function () {
-    if (system_loop_counter == 9) {
+    if (system_loop_counter > 9) {
         system_loop_counter = 0
     }
     if (system_loop_counter == 5) {
@@ -11,7 +11,7 @@ basic.forever(function () {
     }
     if (input.temperature() > 24) {
         led.plot(2, 2)
-        music.playTone(262, music.beat(BeatFraction.Quarter))
+        music.playTone(262, music.beat(BeatFraction.Eighth))
     } else {
         led.unplot(2, 2)
     }
