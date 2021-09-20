@@ -13,8 +13,6 @@ basic.forever(function () {
     if (input.temperature() > 24) {
         music.playTone(262, music.beat(BeatFraction.Quarter))
         basic.showIcon(IconNames.Chessboard)
-    } else {
-        basic.clearScreen()
     }
     if (system_loop_counter == 5) {
         led.plotBrightness(0, 4, 1)
