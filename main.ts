@@ -1,7 +1,10 @@
+let system_loop_counter = 0
 input.onButtonPressed(Button.A, function () {
     basic.showNumber(input.temperature())
 })
-let system_loop_counter = 0
+input.onButtonPressed(Button.B, function () {
+    basic.clearScreen()
+})
 basic.forever(function () {
     if (system_loop_counter > 9) {
         system_loop_counter = 0
