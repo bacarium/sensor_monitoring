@@ -70,10 +70,13 @@ function update_display () {
 function update_alarm_conditions () {
     if (is_temp_high) {
         is_alarm_condition = true
+    } else {
+        is_alarm_condition = false
     }
 }
 basic.forever(function () {
     check_sensors()
+    update_alarm_conditions()
     update_display()
     update_sound()
     update_status()
