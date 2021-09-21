@@ -18,7 +18,7 @@ function update_status () {
     }
     if (loop_counter == 5) {
         led.unplot(0, 4)
-        led.unplot(7, 4)
+        led.unplot(4, 4)
     }
     basic.pause(100)
     loop_counter += 1
