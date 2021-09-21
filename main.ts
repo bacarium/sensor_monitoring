@@ -3,6 +3,7 @@ let is_temp_high = false
 let loop_counter = 0
 let is_sound_enabled = false
 let is_alarm_condition = false
+let is_light_high = false
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
     basic.showNumber(input.temperature())
@@ -71,10 +72,17 @@ function update_display () {
     }
 }
 function update_alarm_conditions () {
-    if (is_temp_high) {
+    if (is_temp_high || is_light_high) {
         is_alarm_condition = true
     } else {
         is_alarm_condition = false
+    }
+}
+function check_light () {
+    if (input.lightLevel() > 127) {
+        is_light_high = true
+    } else {
+        is_light_high = false
     }
 }
 basic.forever(function () {
