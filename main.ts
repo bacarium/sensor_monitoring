@@ -6,7 +6,13 @@ input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
     basic.showNumber(input.temperature())
     if (alarm_is_active) {
-        basic.showIcon(IconNames.Chessboard)
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            . . . . .
+            . . . . .
+            `)
     }
 })
 function update_status () {
@@ -47,7 +53,13 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 function update_display () {
     if (temp_is_high && !(alarm_is_active)) {
         alarm_is_active = true
-        basic.showIcon(IconNames.Chessboard)
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            . . . . .
+            . . . . .
+            `)
     }
     if (!(temp_is_high) && alarm_is_active) {
         alarm_is_active = false
