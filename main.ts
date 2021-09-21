@@ -1,6 +1,13 @@
-let loop_counter = 0
 let alarm_is_active = false
+let loop_counter = 0
 let temp_is_high = false
+input.onButtonPressed(Button.A, function () {
+    basic.clearScreen()
+    basic.showNumber(input.temperature())
+    if (alarm_is_active) {
+        basic.showIcon(IconNames.Chessboard)
+    }
+})
 function update_status () {
     if (loop_counter > 9) {
         loop_counter = 0
@@ -11,6 +18,8 @@ function update_status () {
     if (loop_counter == 5) {
         led.unplot(0, 4)
     }
+    basic.pause(100)
+    loop_counter += 1
 }
 function update_sound () {
     if (alarm_is_active) {
