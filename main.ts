@@ -1,7 +1,7 @@
 let is_alarm_active = false
+let is_temp_high = false
 let loop_counter = 0
 let is_sound_enabled = false
-let is_temp_high = false
 let is_alarm_condition = false
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
@@ -16,6 +16,13 @@ input.onButtonPressed(Button.A, function () {
             `)
     }
 })
+function check_temp () {
+    if (input.temperature() > 24) {
+        is_temp_high = true
+    } else {
+        is_temp_high = false
+    }
+}
 function update_status () {
     if (loop_counter > 9) {
         loop_counter = 0
@@ -36,11 +43,7 @@ function update_sound () {
     }
 }
 function check_sensors () {
-    if (input.temperature() > 24) {
-        is_temp_high = true
-    } else {
-        is_temp_high = false
-    }
+    check_temp()
 }
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (is_sound_enabled) {
@@ -75,7 +78,7 @@ function update_alarm_conditions () {
     }
 }
 basic.forever(function () {
-    check_sensors()
+    check_temp()
     update_alarm_conditions()
     update_display()
     update_sound()
