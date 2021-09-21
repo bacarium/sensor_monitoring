@@ -1,5 +1,6 @@
 let alarm_is_active = false
 let loop_counter = 0
+let sound_is_enabled = false
 let temp_is_high = false
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
@@ -17,12 +18,13 @@ function update_status () {
     }
     if (loop_counter == 5) {
         led.unplot(0, 4)
+        led.unplot(7, 4)
     }
     basic.pause(100)
     loop_counter += 1
 }
 function update_sound () {
-    if (alarm_is_active) {
+    if (alarm_is_active && sound_is_enabled) {
         music.playTone(262, music.beat(BeatFraction.Quarter))
     }
 }
@@ -33,6 +35,15 @@ function check_sensors () {
         temp_is_high = false
     }
 }
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    if (sound_is_enabled) {
+        sound_is_enabled = false
+        led.plotBrightness(4, 4, 1)
+    } else {
+        sound_is_enabled = true
+        led.plotBrightness(4, 4, 255)
+    }
+})
 function update_display () {
     if (temp_is_high && !(alarm_is_active)) {
         alarm_is_active = true
