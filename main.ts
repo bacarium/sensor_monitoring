@@ -45,7 +45,21 @@ function update_sound () {
 }
 function check_sensors () {
     check_temp()
+    check_light()
 }
+input.onButtonPressed(Button.B, function () {
+    basic.clearScreen()
+    basic.showNumber(input.lightLevel())
+    if (is_alarm_active) {
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            . . . . .
+            `)
+    }
+})
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     if (is_sound_enabled) {
         is_sound_enabled = false
@@ -79,7 +93,7 @@ function update_alarm_conditions () {
     }
 }
 function check_light () {
-    if (input.lightLevel() > 127) {
+    if (input.lightLevel() > 128) {
         is_light_high = true
     } else {
         is_light_high = false
