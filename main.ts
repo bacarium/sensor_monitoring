@@ -10,7 +10,7 @@ input.onButtonPressed(Button.A, function () {
             # # # # #
             # # # # #
             # # # # #
-            . . . . .
+            # # # # #
             . . . . .
             `)
     }
@@ -57,7 +57,7 @@ function update_display () {
             # # # # #
             # # # # #
             # # # # #
-            . . . . .
+            # # # # #
             . . . . .
             `)
     }
