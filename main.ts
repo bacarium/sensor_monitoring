@@ -100,7 +100,7 @@ function check_light () {
     }
 }
 basic.forever(function () {
-    check_temp()
+    check_sensors()
     update_alarm_conditions()
     update_display()
     update_sound()
