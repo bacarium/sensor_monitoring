@@ -1,10 +1,21 @@
-let temp_is_high = false
+let loop_counter = 0
 let alarm_is_active = false
+let temp_is_high = false
 function update_status () {
-	
+    if (loop_counter > 9) {
+        loop_counter = 0
+    }
+    if (loop_counter == 0) {
+        led.plotBrightness(0, 4, 1)
+    }
+    if (loop_counter == 5) {
+        led.unplot(0, 4)
+    }
 }
 function update_sound () {
-	
+    if (alarm_is_active) {
+        music.playTone(262, music.beat(BeatFraction.Quarter))
+    }
 }
 function check_sensors () {
     if (input.temperature() > 24) {
