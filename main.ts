@@ -1,11 +1,12 @@
-let alarm_is_active = false
+let is_alarm_active = false
 let loop_counter = 0
-let sound_is_enabled = false
-let temp_is_high = false
+let is_sound_enabled = false
+let is_temp_high = false
+let is_alarm_condition = false
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
     basic.showNumber(input.temperature())
-    if (alarm_is_active) {
+    if (is_alarm_active) {
         basic.showLeds(`
             # # # # #
             # # # # #
@@ -30,29 +31,29 @@ function update_status () {
     loop_counter += 1
 }
 function update_sound () {
-    if (alarm_is_active && sound_is_enabled) {
+    if (is_alarm_active && is_sound_enabled) {
         music.playTone(262, music.beat(BeatFraction.Quarter))
     }
 }
 function check_sensors () {
     if (input.temperature() > 24) {
-        temp_is_high = true
+        is_temp_high = true
     } else {
-        temp_is_high = false
+        is_temp_high = false
     }
 }
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
-    if (sound_is_enabled) {
-        sound_is_enabled = false
+    if (is_sound_enabled) {
+        is_sound_enabled = false
         led.plotBrightness(4, 4, 1)
     } else {
-        sound_is_enabled = true
+        is_sound_enabled = true
         led.plotBrightness(4, 4, 255)
     }
 })
 function update_display () {
-    if (temp_is_high && !(alarm_is_active)) {
-        alarm_is_active = true
+    if (is_alarm_condition && !(is_alarm_active)) {
+        is_alarm_active = true
         basic.showLeds(`
             # # # # #
             # # # # #
@@ -61,9 +62,14 @@ function update_display () {
             . . . . .
             `)
     }
-    if (!(temp_is_high) && alarm_is_active) {
-        alarm_is_active = false
+    if (!(is_alarm_condition) && is_alarm_active) {
+        is_alarm_active = false
         basic.clearScreen()
+    }
+}
+function update_alarm_conditions () {
+    if (is_temp_high) {
+        is_alarm_condition = true
     }
 }
 basic.forever(function () {
